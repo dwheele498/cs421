@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   ngOnInit()
   {
     this.loginService.subscriber$.subscribe(data => {
-      console.log(data);
       this.loggedIn = Boolean(data);
     });
   }

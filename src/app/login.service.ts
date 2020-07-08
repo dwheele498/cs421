@@ -16,11 +16,11 @@ export class LoginService {
   }
 
   login(un: string, pw: string){
-    this.http.post('http://127.0.0.1:5000/login', {username: un, password: pw}).subscribe((response: any ) =>
+    /* this.http.post('http://127.0.0.1:5000/login', {username: un, password: pw}).subscribe((response: any ) =>
     {
-      console.log(response);
-    });
-
+       console.log(response);
+    }); */
+    return this.http.post('http://127.0.0.1:5000/login', {username: un, password: pw});
   }
 
   register(un: string, pw: string){

@@ -5,24 +5,25 @@
           Log-in to your account
         </div>
       </h2>
-      <form class="ui large form">
+      <div *ngIf='badLogin' class="ui error message">
+        <p>Either your username or password is incorrect. Please try again.</p>
+    </div>
+      <form (ngSubmit)="login(); loginForm.reset()" #loginForm="ngForm" class="ui large form">
         <div class="ui stacked segment">
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" name="email" placeholder="E-mail address">
+              <input required type="text" [(ngModel)]='username' name="username" placeholder="Username">
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="lock icon"></i>
-              <input type="password" name="password" placeholder="Password">
+              <input required [(ngModel)]='password' type="password" name="password" placeholder="Password">
             </div>
           </div>
-          <div class="ui fluid large teal submit button" (click)="login()">Login</div>
+          <div class="ui fluid large teal submit button" (click)="login(); loginForm.reset()">Login</div>
         </div>
-  
-        <div class="ui error message"></div>
   
       </form>
   

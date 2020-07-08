@@ -25,6 +25,8 @@ class User:
     @classmethod
     def pass_check(cls,un, pw):
         user = User.find_by_username(un)
+        if user is None:
+            return False
         if user.password != pw:
             return False
         return True
@@ -75,6 +77,6 @@ class UserLogin(Resource):
     def post(self):
         data = UserLogin.parser.parse_args()
         if User.pass_check(data['username'], data['password']):
-            return {'message': 'user successfully logged in'},200
-        return {'message':'username of password incorrect'},400
+            return {'message': 'user successfully logged in','loggedin':True},200
+        return {'message':'username of password incorrect','loggedin':False},401
 

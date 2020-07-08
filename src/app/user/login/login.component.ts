@@ -10,11 +10,19 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   constructor(private loginService: LoginService, private router: Router) {}
+  username = '';
+  password = '';
+  badLogin = false;
 
   login(){
-    this.loginService.login('admin','admin');
-    this.loginService.emitData(true);
-    this.router.navigate(['./']);
+    this.loginService.login(this.username, this.password).subscribe((response: any) => {
+      this.loginService.emitData(response.loggedin);
+      if (response.loggedin === true){
+        this.router.navigate(['./property/manage']);
+        this.badLogin = false;
+      }
+    });
+    this.badLogin = true;
   }
 
   ngOnInit(): void {}
