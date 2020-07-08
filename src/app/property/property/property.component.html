@@ -1,0 +1,28 @@
+<div class="ui card">
+    <div class="image">
+      <i class="home icon"></i>
+      <img *ngIf="imgSrc!==''" src={{imgSrc}} class="item">
+    </div>
+    <div class="content">
+      <a class="header">{{name}}</a>
+      <div class="description">
+        Starting Price: {{price}}
+      </div>
+    </div>
+    <div class="extra content">
+      <a>
+        <i class="user icon"></i>
+        Owner: {{owner}}
+      </a>
+    </div>
+    <button class="ui button" (click)='showDetail()'>Details</button>
+        <app-property-detail *ngIf='showDet' (close)="showDetail()">
+          <div detailTitle>{{name}}</div>
+          <div>
+            <p>Current Bid: {{currentBid | currency}}</p>
+            <p>
+              Some details about the property I guess if it needs to be filled out later
+            </p>
+          </div>
+        </app-property-detail>
+  </div>

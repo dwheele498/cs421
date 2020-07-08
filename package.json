@@ -20,7 +20,9 @@
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
     "rxjs": "~6.5.4",
+    "semantic-ui-css": "^2.4.1",
     "tslib": "^1.10.0",
+    "vercel": "^19.1.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
