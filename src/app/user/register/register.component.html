@@ -1,4 +1,8 @@
-<form class="ui form">
+<div *ngIf='badreg' class="ui error message">
+  <p>Username is already in use. Please try again.</p>
+</div>
+
+<form (ngSubmit)="register()" #registerForm="ngForm" class="ui form">
     <div class="field">
       <label>First Name</label>
       <input type="text" name="first-name" placeholder="First Name">
@@ -8,12 +12,16 @@
       <input type="text" name="last-name" placeholder="Last Name">
     </div>
     <div class="field">
+      <label>Username</label>
+      <input required type="text" [ngModel]='un' name="username" placeholder="Username">
+    </div>
+    <div class="field">
         <label>Email</label>
         <input type="email" name="email" placeholder="Email Address">
       </div>
       <div class="field">
         <label>Password</label>
-        <input type="password" name="password" placeholder="Password">
+        <input required type="password" [ngModel]='pw' name="password" placeholder="Password">
       </div>
       <div class="field">
         <label>Company Name</label>
@@ -21,5 +29,5 @@
       </div>
     <div class="field">
     </div>
-    <button (click)="register('test','admin'); $event.preventDefault()"  class="ui teal button" type="submit">Submit</button>
+    <button (click)="register(); $event.preventDefault()"  class="ui teal button" type="submit">Submit</button>
   </form>

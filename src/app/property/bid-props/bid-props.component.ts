@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PropertyService } from 'src/app/property.service';
 
 @Component({
   selector: 'app-bid-props',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BidPropsComponent implements OnInit {
 
-  constructor() { }
+  img: File;
+
+  constructor(private property: PropertyService) { }
 
   ngOnInit(): void {
+    this.property.getPropertyByOwner('admin','TEST').subscribe((res:any)=>{
+      this.img = res.image;
+    })
   }
 
 }

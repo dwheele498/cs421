@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { LoginService } from '../../login.service';
 import { Router } from '@angular/router';
@@ -14,15 +14,18 @@ export class LoginComponent implements OnInit {
   password = '';
   badLogin = false;
 
-  login(){
-    this.loginService.login(this.username, this.password).subscribe((response: any) => {
-      this.loginService.emitData(response.loggedin);
-      if (response.loggedin === true){
+  login() {
+    this.loginService.login(this.username, this.password).subscribe(
+      (response: any) => {
+        this.loginService.emitData(response.loggedin);
         this.router.navigate(['./property/manage']);
         this.badLogin = false;
+        this.loginService.setOwner(response.data.username);
+      },
+      (err: any) => {
+        this.badLogin = err.loggedin;
       }
-    });
-    this.badLogin = true;
+    );
   }
 
   ngOnInit(): void {}

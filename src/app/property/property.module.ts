@@ -7,6 +7,7 @@ import { PropertyRoutingModule } from './property-routing.module';
 import { PropertyDetailComponent } from './property-detail/property-detail.component';
 import { AddPropsComponent } from './add-props/add-props.component';
 import { BidPropsComponent } from './bid-props/bid-props.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -14,7 +15,8 @@ import { BidPropsComponent } from './bid-props/bid-props.component';
   declarations: [ManageComponent, PropertyComponent, ViewComponent, PropertyDetailComponent, AddPropsComponent, BidPropsComponent],
   imports: [
     CommonModule,
-    PropertyRoutingModule
+    PropertyRoutingModule,
+    FormsModule
   ]
 })
 export class PropertyModule { }

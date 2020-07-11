@@ -1,5 +1,14 @@
 import sqlite3
 from flask_restful import Resource, reqparse
+from pymongo import MongoClient
+from flask_cors import CORS
+
+client = MongoClient()
+db = client.users
+col = db.users
+
+
+
 
 
 
@@ -11,17 +20,15 @@ class User:
 
     @classmethod
     def find_by_username(cls, un):
-        connection = sqlite3.connect('data.db')
-        cursor = connection.cursor()
-        select = "SELECT * FROM users WHERE username=?"
-        result = cursor.execute(select,(un,))
-        row = result.fetchone()
-        if row:
-            user = cls(*row)
+        result = col.find_one({'username':'admin'})
+        if result:
+            user = User(result['_id'],result['username'],result['password'])
         else:
             user = None
-        connection.close()
         return user
+
+
+
     @classmethod
     def pass_check(cls,un, pw):
         user = User.find_by_username(un)
@@ -49,16 +56,10 @@ class UserRegister(Resource):
 
     def post(self):
         data = UserRegister.parser.parse_args()
-        if User.find_by_username(data['username']):
+        if User.find_by_username(data['username']) is not None:
             return {'message':'user already exists'},400
 
-        connection = sqlite3.connect('data.db')
-        cursor = connection.cursor()
-        
-        cursor.execute("INSERT INTO users VALUES (NULL,?,?)",(data['username'],data['password']))
-        connection.commit()
-        connection.close()
-
+        col.insert_one({'username':data['username'],'password':data['password'],'bids':[]})
         return {'message':'user created'},201
 
 
@@ -77,6 +78,8 @@ class UserLogin(Resource):
     def post(self):
         data = UserLogin.parser.parse_args()
         if User.pass_check(data['username'], data['password']):
-            return {'message': 'user successfully logged in','loggedin':True},200
+            details = col.find_one({'username':data['username']})
+            details['_id']=str(details['_id'])
+            return {'message': 'user successfully logged in','loggedin':True,'data':details},200
         return {'message':'username of password incorrect','loggedin':False},401
 

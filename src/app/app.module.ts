@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
 import {FormsModule} from '@angular/forms';
+import { LoginService } from './login.service';
+import { PropertyService } from './property.service';
 
 
 @NgModule({
@@ -18,7 +20,7 @@ import {FormsModule} from '@angular/forms';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [LoginService, PropertyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

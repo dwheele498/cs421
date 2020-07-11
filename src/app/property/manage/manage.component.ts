@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private login: LoginService, private router: Router) { }
 
   ngOnInit(): void {
+    if (!this.login.getOwner()){
+      this.router.navigate(['./user']);
+    }
   }
 
 }
