@@ -1,7 +1,7 @@
 <div class="ui container">
   <div *ngIf="loggedIn" class="ui secondary pointing menu">
-<a class="item" routerLink='property/manage' >Manage</a>
-<a class="item" routerLink='property/view'>View</a>
+<a class="item" reouterLinkActive='active' routerLink='property/manage' >Manage</a>
+<a class="item" routerLinkActive='active' routerLink='property/view'>View</a>
 <a class="item right aligned" href="#" (click)="logout()">Logout</a>
 </div>
 <div class="ui divider" *ngIf="!loggedIn"></div>

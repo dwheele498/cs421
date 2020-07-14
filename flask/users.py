@@ -56,8 +56,8 @@ class UserRegister(Resource):
 
     def post(self):
         data = UserRegister.parser.parse_args()
-        if User.find_by_username(data['username']) is not None:
-            return {'message':'user already exists'},400
+        if not col.find({'username':data['username']}):
+            return {'message':'username in use','details':data['username']},403
 
         col.insert_one({'username':data['username'],'password':data['password'],'bids':[]})
         return {'message':'user created'},201
@@ -77,9 +77,10 @@ class UserLogin(Resource):
 
     def post(self):
         data = UserLogin.parser.parse_args()
-        if User.pass_check(data['username'], data['password']):
+        if col.find_one({'$and':[{'username':data['username'],'password':data['password']}]}):
             details = col.find_one({'username':data['username']})
             details['_id']=str(details['_id'])
             return {'message': 'user successfully logged in','loggedin':True,'data':details},200
-        return {'message':'username of password incorrect','loggedin':False},401
+        else:
+            return {'message':'username or password incorrect','loggedin':False},401
 

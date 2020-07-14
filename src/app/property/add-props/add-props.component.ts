@@ -15,6 +15,7 @@ export class AddPropsComponent implements OnInit {
   owner: string;
   price: number;
   desc = '';
+  imgPath = '';
   success: boolean;
   formData = new FormData();
 
@@ -34,7 +35,7 @@ export class AddPropsComponent implements OnInit {
     // formData.append('imgsrc', this.file);
     // console.log(formData);
     this.proper
-      .submitProperty(this.name, this.price, this.owner, this.desc, this.file)
+      .submitProperty(this.name, this.price, this.owner, this.desc, this.imgPath)
       .subscribe(
         (res: any) => {
           console.log(res.message);
@@ -60,8 +61,9 @@ export class AddPropsComponent implements OnInit {
     //   headers: hheaders
     // }).subscribe(
     this.proper.submitImg(imgsrc, hheaders).subscribe(
-      (res) => {
+      (res: any) => {
         console.log(res);
+        this.imgPath = res.data;
       },
       (err) => {
         console.log(err);

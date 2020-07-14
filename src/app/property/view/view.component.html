@@ -1,5 +1,6 @@
 <div class="ui grid">
-    <div *ngFor="let p of proper" class="five wide column" >
-        <app-property [name]="p.name" [price]=p.price [owner]=p.owner [currentBid]=p.currentBid [imgSrc]=p.imageSrc ></app-property>
+    <div *ngFor="let p of proper"class="five wide column" >
+        <app-property [propert]=p  ></app-property>
+        <!-- [name]="p.name" [price]="p.price" [owner]="p.owner" [currentBid]="p.currentBid" [desc]="p.description" [imgsrc]=p.imagesrc -->
     </div>
 </div>

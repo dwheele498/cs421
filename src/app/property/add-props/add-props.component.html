@@ -1,7 +1,7 @@
 <div *ngIf='success' class="ui error message">
-  <p>Either your username or password is incorrect. Please try again.</p>
+  <p>Property failed to upload please try again</p>
 </div>
-<form class="ui form">
+<form #propertyForm (submit)='propertyForm.reset()' class="ui form">
     <div class="field">
       <label>Property Name</label>
       <input required [(ngModel)]='name' type="text" name="name" placeholder="Property Name">

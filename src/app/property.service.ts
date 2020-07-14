@@ -15,7 +15,7 @@ export class PropertyService {
     startingPrice: number,
     newOwner: string,
     descr: string,
-    imagesrc: any
+    imagesrc: string
   ) {
     return this.http.post('http://127.0.0.1:5000/property/new', {
       name: propertyName,
@@ -41,5 +41,9 @@ export class PropertyService {
     return this.http.get(
       'http://127.0.0.1:5000/property/view?owner=' + owner + '&name=' + name
     );
+  }
+
+  getAllProperty(){
+    return this.http.get('http://127.0.0.1:5000/property/all');
   }
 }

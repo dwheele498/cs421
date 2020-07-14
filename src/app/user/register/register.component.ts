@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
+    console.log(this.un, this.pw);
     this.login.register(this.un, this.pw).subscribe((res: any) => {
         console.log(res);
         this.router.navigate(['/user']);
