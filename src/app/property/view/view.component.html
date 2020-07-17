@@ -1,6 +1,12 @@
+<div *ngIf='!active' class="container-fluid">
+    <h3 class='ui center aligned header'>No current properties available</h3>
+    </div>
+<ng-container *ngIf='active'>
 <div class="ui grid">
+    
     <div *ngFor="let p of proper"class="five wide column" >
         <app-property [propert]=p  ></app-property>
         <!-- [name]="p.name" [price]="p.price" [owner]="p.owner" [currentBid]="p.currentBid" [desc]="p.description" [imgsrc]=p.imagesrc -->
     </div>
 </div>
+</ng-container>

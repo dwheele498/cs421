@@ -112,28 +112,26 @@ class ViewProperty(Resource):
         user = ucol.find_one({'username': data['owner']})
         propids = []
         userprops = []
-        for b in user['bids']:
-            propids.append(b)
-        for p in propids:
-            z = col.find_one({'_id': ObjectId(p)})
-            userprops.append({
-                'id': str(z['_id']),
-                'name': z['name'],
-                'price': z['price'],
-                'owner': z['owner'],
-                'bid': z['bid'],
-                'description': z['description'],
-                'imgsrc': z['imgsrc']
-            })
-
-        return {'message': 'successfully retrieved properties', 'properties': userprops}, 200
-        # data = ViewProperty.getparser.parse_args()
-        # prop = ViewProperty.getEntry(data['owner'], data['name'])
-        # resp = {
-        #     'id':str(prop['_id'])
-
-        # }
-        # return {'message': 'succesfully obtained property', 'property': resp}, 200
+        if user['bids']:
+            for b in user['bids']:
+                propids.append(b)
+            for p in propids:
+                z = col.find_one({'_id': ObjectId(p)})
+                if z:
+                    userprops.append({
+                        'id': str(z['_id']),
+                        'name': z['name'],
+                        'price': z['price'],
+                        'owner': z['owner'],
+                        'bid': z['bid'],
+                        'description': z['description'],
+                        'imgsrc': z['imgsrc']
+                    })
+                else:
+                    return {'message':'currently no bids','properties':'no properties'},204
+            return {'message': 'successfully retrieved properties', 'properties': userprops}, 200
+        else:
+            return {'message': 'currently no bids', 'properties' : 'no properties'}, 204
 
     @classmethod
     def getEntry(cls, owner, name):
@@ -153,7 +151,6 @@ class ImageProperty(Resource):
         file.save(os.path.join(uploadDir, file.filename))
         jpg = os.path.join(uploadDir, file.filename)
         z = Cloud.uploader.upload(jpg)
-        print(z)
         return {'message': 'successfully stored image', 'data': z['secure_url']}, 200
 
 

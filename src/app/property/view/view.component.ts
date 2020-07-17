@@ -12,6 +12,7 @@ import { PropertyService } from 'src/app/property.service';
 })
 export class ViewComponent implements OnInit {
   proper: [];
+  active: boolean;
 
   constructor(
     private router: Router,
@@ -26,7 +27,12 @@ export class ViewComponent implements OnInit {
   ngOnInit(): void {
     this.propt.getAllProperty().subscribe((resp: any) => {
       this.proper = resp.data;
-      console.log(this.proper);
+      if (this.proper.length > 0){
+        this.active = true;
+      }
+      else {
+        this.active = false;
+      }
     });
   }
 }

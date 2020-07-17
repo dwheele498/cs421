@@ -42,34 +42,22 @@ class AddBid(Resource):
         return {'message': 'successfully added bid'}, 200
 
 
-class UserBids(Resource):
-    userparse = reqparse.RequestParser()
-    userparse.add_argument('username',
-                           type=str,
-                           required=True,
-                           help="This field cannot be left blank",
-                           location='args'
-                           )
+class SellProp(Resource):
+    sellparse = reqparse.RequestParser()
+    sellparse.add_argument('id', type=str, required=True,
+                           help='id is required')
+    sellparse.add_argument('username', type=str, required=True,
+                           help='username is required')
 
-    #caught by cors for some reason, do not use
-    def get(self,methods=['GET']):
-        data = request.args.get('username')
-        user = ucol.find_one({'username': data})
-        propids = []
-        userprops = []
-        user = ucol.find_one({'username': data})
-        for b in user['bids']:
-            propids.append(b)
-        for p in propids:
-            z = col.find_one({'_id': ObjectId(p)})
-            userprops.append({
-                'id': str(z['_id']),
-                'name': z['name'],
-                'price': z['price'],
-                'owner': z['owner'],
-                'bid': z['bid'],
-                'description': z['description'],
-                'imgsrc': z['imgsrc']
-            })
-
-        return {'message': 'successfully retrieved properties', 'properties': userprops}, 200
+    def post(self):
+        data = SellProp.sellparse.parse_args()
+        h = col.find_one({'_id': ObjectId(data['id'])})
+        f = h['bid']
+        col.delete_one({'_id': ObjectId(data['id'])})
+        z = ucol.find_one({'username': data['username']})
+        z2 = z['funds']
+        ucol.update_one({'username': data['username']}, {'funds': z2+f})
+        ucol.update_many({}, {'$pull': {'bids': data['id']}})
+        return {
+            'message': 'property successfully sold'
+        }

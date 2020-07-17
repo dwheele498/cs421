@@ -33,9 +33,7 @@ export class PropertyService {
   }
 
   getPropertyByOwner(owner: string) {
-    return this.http.get(
-      'http://127.0.0.1:5000/property/view?owner=' + owner
-    );
+    return this.http.get('http://127.0.0.1:5000/property/view?owner=' + owner);
   }
 
   getAllProperty() {
@@ -51,7 +49,18 @@ export class PropertyService {
     });
   }
 
-  userBids(owner: string){
-      return this.http.get('http://127.0.0.1:500/bids/user?username=' + owner);
+  userBids(owner: string) {
+    return this.http.get('http://127.0.0.1:5000/bids/user?username=' + owner);
+  }
+
+  sellProp(propid: string, user: string){
+    console.log(user);
+    this.http.post('http://127.0.0.1:5000/bid/sell', {
+      id: propid,
+      username: user
+
+    }).subscribe((res)=>{
+      console.log(res);
+    });
   }
 }

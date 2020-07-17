@@ -1,5 +1,5 @@
 import sqlite3
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, request
 from pymongo import MongoClient
 from flask_cors import CORS
 
@@ -59,7 +59,7 @@ class UserRegister(Resource):
         if not col.find({'username':data['username']}):
             return {'message':'username in use','details':data['username']},403
 
-        col.insert_one({'username':data['username'],'password':data['password'],'bids':[]})
+        col.insert_one({'username':data['username'],'password':data['password'],'bids':[],'funds':0})
         return {'message':'user created'},201
 
 
@@ -84,3 +84,21 @@ class UserLogin(Resource):
         else:
             return {'message':'username or password incorrect','loggedin':False},401
 
+
+
+class AddFunds(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('funds',type=int,required=True,help='A money amount is required')
+    parser.add_argument('username',type=str,required=True,help='A username is required')
+
+    def post(self):
+        data = AddFunds.parser.parse_args()
+        col.update_one({'username':data['username']},{'$set':{'funds':data['funds']}})
+        return{'message':'funds successfully added'},200
+
+class GetFunds(Resource):
+   
+   def get(self):
+    data = request.args.get('username')
+    z = col.find_one({'username':data})
+    return {'funds':z['funds']},200

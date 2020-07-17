@@ -11,6 +11,7 @@ export class BidPropsComponent implements OnInit {
   img: File;
   userprops = [];
   user: string;
+  active: boolean;
 
   constructor(
     private property: PropertyService,
@@ -21,6 +22,12 @@ export class BidPropsComponent implements OnInit {
     this.user = this.logger.getOwner();
     this.property.getPropertyByOwner(this.user).subscribe((res: any) => {
       this.userprops = res.properties;
+      if (this.userprops.length > 0){
+        this.active = true;
+      }
+      else {
+        this.active = false;
+      }
     });
-  }
+}
 }

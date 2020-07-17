@@ -8,15 +8,18 @@ import { PropertyDetailComponent } from './property-detail/property-detail.compo
 import { AddPropsComponent } from './add-props/add-props.component';
 import { BidPropsComponent } from './bid-props/bid-props.component';
 import { FormsModule } from '@angular/forms';
-
-
+import { FundsComponent } from './funds/funds.component';
 
 @NgModule({
-  declarations: [ManageComponent, PropertyComponent, ViewComponent, PropertyDetailComponent, AddPropsComponent, BidPropsComponent],
-  imports: [
-    CommonModule,
-    PropertyRoutingModule,
-    FormsModule
-  ]
+  declarations: [
+    ManageComponent,
+    PropertyComponent,
+    ViewComponent,
+    PropertyDetailComponent,
+    AddPropsComponent,
+    BidPropsComponent,
+    FundsComponent,
+  ],
+  imports: [CommonModule, PropertyRoutingModule, FormsModule],
 })
-export class PropertyModule { }
+export class PropertyModule {}
