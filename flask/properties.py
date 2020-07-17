@@ -16,9 +16,9 @@ password = urllib.parse.quote_plus('Dvine489!')
 
 client = MongoClient('mongodb+srv://'+username+':'+password+'@cluster0.19oll.mongodb.net/<properties>?retryWrites=true&w=majority')
 
-db = client.properties
+db = client.test
 col = db.properties
-udb = client.users
+udb = client.test
 ucol = udb.users
 fs = gridfs.GridFS(db)
 uploadDir = 'images/'
