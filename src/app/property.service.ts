@@ -26,15 +26,10 @@ export class PropertyService {
     });
   }
 
-  submitImg(
-    imgsrc: FormData,
-    hheaders: HttpHeaders,
-  ) {
-    return this.http.post(
-      'http://127.0.0.1:5000/property/new/img',
-      imgsrc,
-      { headers: hheaders }
-    );
+  submitImg(imgsrc: FormData, hheaders: HttpHeaders) {
+    return this.http.post('http://127.0.0.1:5000/property/new/img', imgsrc, {
+      headers: hheaders,
+    });
   }
 
   getPropertyByOwner(owner: string, name: string) {
@@ -43,7 +38,21 @@ export class PropertyService {
     );
   }
 
-  getAllProperty(){
+  getAllProperty() {
     return this.http.get('http://127.0.0.1:5000/property/all');
+  }
+
+  submitBid(owner: string, bidAmount: number, id: string) {
+    console.log(bidAmount);
+    return this.http.post('http://127.0.0.1:5000/bid/add', {
+      username: owner,
+      bid: bidAmount,
+      _id: id,
+    });
+  }
+
+  userBids(owner: string){
+      return this.http.get('http://127.0.0.1:500/userbids?username=' + owner);
+   
   }
 }

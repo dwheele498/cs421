@@ -6,8 +6,11 @@
         </div>
         <div class="content">
             <ng-content></ng-content>
+            <div class="field">
             <div class="footer" *ngIf='bid'>
-                <input class="ui input focus" type="text" placeholder="Enter Bid Here" >
+                <input #bidIn [(ngModel)]='bidAmount' class="ui input focus" type="text" placeholder="Enter Bid Here">
+                <button class="ui button submit" (click)='sendBid();bidIn.value("")'>Submit</button>
+            </div>
             </div>
         </div>
         <div class="actions actions-default">

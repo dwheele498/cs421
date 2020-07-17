@@ -16,7 +16,7 @@
       </a>
     </div>
     <button class="ui button" (click)='showDetail()'>Details</button>
-        <app-property-detail *ngIf='showDet' (close)="showDetail()">
+        <app-property-detail *ngIf='showDet' [id]=id [owner]=owner [price]=price [currentBid] = currentBid  (close)="showDetail()">
           <div detailTitle>{{name}}</div>
           <div>
             <p>Current Bid: {{currentBid | currency}}</p>

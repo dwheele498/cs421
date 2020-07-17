@@ -11,18 +11,18 @@ import cloudinary.uploader
 
 
 client = MongoClient()
-client2 = MongoClient()
+
 db = client.properties
-db2 = client2.paths
 col = db.properties
-col2 = db2.paths
+udb = client.users
+ucol = udb.users
 fs = gridfs.GridFS(db)
 uploadDir = 'images/'
 
 Cloud.config(
-  cloud_name = 'dtis1mlk2',  
-  api_key = '741724242335472',  
-  api_secret = 'lF3-bxKsDy25lkDlv02tOQedwX0'  
+    cloud_name='dtis1mlk2',
+    api_key='741724242335472',
+    api_secret='lF3-bxKsDy25lkDlv02tOQedwX0'
 )
 
 if not os.path.exists(uploadDir):
@@ -109,8 +109,33 @@ class ViewProperty(Resource):
 
     def get(self):
         data = ViewProperty.getparser.parse_args()
-        prop = ViewProperty.getEntry(data['owner'], data['name'])
-        return {'message': 'succesfully obtained property', 'property': prop}, 200
+        user = ucol.find_one({'username': data['owner']})
+        propids = []
+        userprops = []
+        print(user['username'])
+        for b in user['bids']:
+            propids.append(b)
+        print(propids)
+        for p in propids:
+            z = col.find_one({'_id': ObjectId(p)})
+            userprops.append({
+                'id': str(z['_id']),
+                'name': z['name'],
+                'price': z['price'],
+                'owner': z['owner'],
+                'bid': z['bid'],
+                'description': z['description'],
+                'imgsrc': z['imgsrc']
+            })
+
+        return {'message': 'successfully retrieved properties', 'properties': userprops}, 200
+        # data = ViewProperty.getparser.parse_args()
+        # prop = ViewProperty.getEntry(data['owner'], data['name'])
+        # resp = {
+        #     'id':str(prop['_id'])
+
+        # }
+        # return {'message': 'succesfully obtained property', 'property': resp}, 200
 
     @classmethod
     def getEntry(cls, owner, name):
@@ -125,14 +150,14 @@ class ImageProperty(Resource):
     imgparser = reqparse.RequestParser()
 
     def post(self):
-        
+
         file = request.files['file']
         file.save(os.path.join(uploadDir, file.filename))
         jpg = os.path.join(uploadDir, file.filename)
         z = Cloud.uploader.upload(jpg)
         print(z)
-        return {'message': 'successfully stored image','data':z['secure_url']}, 200
-        
+        return {'message': 'successfully stored image', 'data': z['secure_url']}, 200
+
 
 class AllProperty(Resource):
     def get(self):
@@ -149,4 +174,31 @@ class AllProperty(Resource):
                 'imgsrc': properties['imgsrc']
             }
             holder.append(z)
-        return {'message':'all properties attached','data':holder},200
+        return {'message': 'all properties attached', 'data': holder}, 200
+
+
+# class AddBid(Resource):
+#     bidparse = reqparse.RequestParser()
+#     bidparse.add_argument('username',
+#                           type=str,
+#                           required=True,
+#                           help="username cannot be left blank"
+#                           )
+#     bidparse.add_argument('bid',
+#                           type=int,
+#                           required=True,
+#                           help="bid cannot be left blank"
+#                           )
+#     bidparse.add_argument('_id',
+#                           type=str,
+#                           required=True,
+#                           help="id cannot be left blank"
+#                           )
+
+#     def post(self):
+#         data = AddBid.bidparse.parse_args()
+#         prop = col.find_one({'_id':ObjectId(data['_id'])})
+#         newBid = prop['bid'] + data['bid']
+#         col.update_one({'_id':ObjectId(data['_id'])},{'$set':{'bid':newBid}})
+#         ucol.update({'username':data['username']},{'$push':{'bids':data['_id']}})
+#         return {'message':'successfully added bid'},200

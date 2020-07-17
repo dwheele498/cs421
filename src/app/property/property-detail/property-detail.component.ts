@@ -1,30 +1,58 @@
-import { Component, OnInit, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
-import {PropertyModel} from '../property.model';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  OnDestroy,
+  Output,
+  EventEmitter,
+  Input,
+} from '@angular/core';
+import { PropertyModel } from '../property.model';
+import { PropertyService } from 'src/app/property.service';
+import { BindingFlags } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-property-detail',
   templateUrl: './property-detail.component.html',
-  styleUrls: ['./property-detail.component.css']
+  styleUrls: ['./property-detail.component.css'],
 })
 export class PropertyDetailComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter();
+  @Input() owner: string;
+  @Input() id: string;
+  @Input() price: number;
+  @Input() currentBid: number;
   bid = false;
+  bidAmount: number;
 
-  constructor(private ef: ElementRef) { }
+  constructor(private ef: ElementRef, private ps: PropertyService) {}
 
   ngOnInit(): void {
     document.body.appendChild(this.ef.nativeElement);
   }
-  ngOnDestroy(): void{
+  ngOnDestroy(): void {
     document.body.removeChild(this.ef.nativeElement);
   }
 
-  closeDetail(){
+  closeDetail() {
     this.close.emit();
   }
 
-  openBid(){
+  openBid() {
     this.bid = !this.bid;
   }
 
+  sendBid() {
+    if (this.bidAmount > this.price &&  this.bidAmount > this.currentBid){
+    this.openBid();
+    this.ps
+      .submitBid(this.owner, this.bidAmount, this.id)
+      .subscribe((res: any) => {
+        console.log(res);
+      });
+    }
+    else{
+      alert('Bid must be greater than starting price or current bid');
+    }
+  }
 }

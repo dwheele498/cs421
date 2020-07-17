@@ -16,18 +16,10 @@ export class LoginService {
   }
 
   login(un: string, pw: string) {
-    let g = this.http.post('http://127.0.0.1:5000/login', {
+    return this.http.post('http://127.0.0.1:5000/login', {
       username: un,
       password: pw,
     });
-    setTimeout(() => {
-      this.http.post('http://127.0.0.1:5000/login', {
-      username: un,
-      password: pw,
-    }).subscribe((res: any) => {
-
-    }); } , 2000);
-    return g;
   }
 
   register(un: string, pw: string) {

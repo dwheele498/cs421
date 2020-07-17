@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { isUndefined } from 'util';
+import { PropertyService } from 'src/app/property.service';
 
 
 @Component({
@@ -9,12 +10,6 @@ import { isUndefined } from 'util';
 })
 export class PropertyComponent implements OnInit {
 
- /* @Input() name: string;
- @Input() price: number;
- @Input() owner: string;
- @Input() imgsrc: string;
- @Input() currentBid: number;
- @Input() desc: string; */
  @Input() propert: any;
  name: string;
  price: number;
@@ -23,13 +18,15 @@ export class PropertyComponent implements OnInit {
  currentBid: number;
  desc: string;
  showDet = false;
-  constructor() {
+ newBid = 0;
+ id: string;
+
+  constructor(private proper: PropertyService) {
   }
 
   ngOnInit(): void {
-  //   console.log(this.currentBid);
-  //   console.log(this.imgsrc);
-  // }
+
+  this.id = this.propert.id;
   this.name = this.propert.name;
   this.imgsrc = this.propert.imgsrc;
   this.price = this.propert.price;
@@ -41,5 +38,13 @@ export class PropertyComponent implements OnInit {
   showDetail(){
     this.showDet = !this.showDet;
   }
+
+  setBid(bid: number){
+    this.newBid = bid;
+  }
+
+
+
+
 
 }
