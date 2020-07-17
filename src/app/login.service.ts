@@ -10,20 +10,21 @@ export class LoginService {
   public subscriber$ = this.observer.asObservable();
   constructor(private http: HttpClient) {}
   owner: string;
+  pathName =  'http://dwheel7.pythonanywhere.com';
 
   emitData(data) {
     this.observer.next(data);
   }
 
   login(un: string, pw: string) {
-    return this.http.post('http://127.0.0.1:5000/login', {
+    return this.http.post(this.pathName + '/login', {
       username: un,
       password: pw,
     });
   }
 
   register(un: string, pw: string) {
-    return this.http.post('http://127.0.0.1:5000/register', {
+    return this.http.post(this.pathName + '/register', {
       username: un,
       password: pw,
     });

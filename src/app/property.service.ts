@@ -9,6 +9,7 @@ export class PropertyService {
   constructor(private http: HttpClient) {}
 
   property: {};
+  pathName = 'https://dwheel7.pythonanywhere.com';
 
   submitProperty(
     propertyName: string,
@@ -17,7 +18,7 @@ export class PropertyService {
     descr: string,
     imagesrc: string
   ) {
-    return this.http.post('http://127.0.0.1:5000/property/new', {
+    return this.http.post(this.pathName + '/property/new', {
       name: propertyName,
       price: startingPrice,
       owner: newOwner,
@@ -27,22 +28,22 @@ export class PropertyService {
   }
 
   submitImg(imgsrc: FormData, hheaders: HttpHeaders) {
-    return this.http.post('http://127.0.0.1:5000/property/new/img', imgsrc, {
+    return this.http.post(this.pathName + '/property/new/img', imgsrc, {
       headers: hheaders,
     });
   }
 
   getPropertyByOwner(owner: string) {
-    return this.http.get('http://127.0.0.1:5000/property/view?owner=' + owner);
+    return this.http.get(this.pathName + '/property/view?owner=' + owner);
   }
 
   getAllProperty() {
-    return this.http.get('http://127.0.0.1:5000/property/all');
+    return this.http.get( this.pathName + '/property/all');
   }
 
   submitBid(owner: string, bidAmount: number, id: string) {
     console.log(bidAmount);
-    return this.http.post('http://127.0.0.1:5000/bid/add', {
+    return this.http.post(this.pathName + '/bid/add', {
       username: owner,
       bid: bidAmount,
       _id: id,

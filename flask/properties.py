@@ -8,9 +8,13 @@ from bson.objectid import ObjectId
 import os
 import cloudinary as Cloud
 import cloudinary.uploader
+import urllib.parse
+
+username = urllib.parse.quote_plus('dwheel7@uab.edu')
+password = urllib.parse.quote_plus('Dvine489!')
 
 
-client = MongoClient()
+client = MongoClient('mongodb+srv://'+username+':'+password+'@cluster0.19oll.mongodb.net/<properties>?retryWrites=true&w=majority')
 
 db = client.properties
 col = db.properties

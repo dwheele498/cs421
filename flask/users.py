@@ -2,8 +2,15 @@ import sqlite3
 from flask_restful import Resource, reqparse, request
 from pymongo import MongoClient
 from flask_cors import CORS
+import urllib.parse
 
-client = MongoClient()
+username = urllib.parse.quote_plus('dwheel7@uab.edu')
+password = urllib.parse.quote_plus('Dvine489!')
+
+
+client = MongoClient('mongodb+srv://'+username+':'+password+'@cluster0.19oll.mongodb.net/<properties>?retryWrites=true&w=majority')
+
+
 db = client.users
 col = db.users
 

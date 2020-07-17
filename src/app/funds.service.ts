@@ -7,16 +7,17 @@ import { LoginService } from './login.service';
 })
 export class FundsService {
 
+  pathName = ' http://dwheel7.pythonanywhere.com';
   constructor(private http: HttpClient, private ls: LoginService) { }
 
 
 
   getFunds(username: string) {
-    return this.http.get('http://127.0.0.1:5000/manage/checkfunds?username='+ username);
+    return this.http.get(this.pathName + '/manage/checkfunds?username='+ username);
   }
 
   addFunds(money: number, un: string) {
-    return this.http.post('http://127.0.0.1:5000/manage/addfunds', {
+    return this.http.post(this.pathName + '/manage/addfunds', {
       funds: money,
       username: un
     });
