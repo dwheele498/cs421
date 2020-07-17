@@ -11,7 +11,7 @@ password = urllib.parse.quote_plus('Dvine489!')
 client = MongoClient('mongodb+srv://'+username+':'+password+'@cluster0.19oll.mongodb.net/<properties>?retryWrites=true&w=majority')
 
 
-db = client.test
+db = client.users
 col = db.users
 
 
