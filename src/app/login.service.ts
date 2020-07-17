@@ -10,7 +10,7 @@ export class LoginService {
   public subscriber$ = this.observer.asObservable();
   constructor(private http: HttpClient) {}
   owner: string;
-  pathName =  'http://dwheel7.pythonanywhere.com';
+  pathName =  'http://127.0.0.1:5000';
 
   emitData(data) {
     this.observer.next(data);

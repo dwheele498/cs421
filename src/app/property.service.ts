@@ -9,7 +9,7 @@ export class PropertyService {
   constructor(private http: HttpClient) {}
 
   property: {};
-  pathName = 'https://dwheel7.pythonanywhere.com';
+  pathName = 'http://127.0.0.1';
 
   submitProperty(
     propertyName: string,

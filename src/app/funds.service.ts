@@ -7,7 +7,7 @@ import { LoginService } from './login.service';
 })
 export class FundsService {
 
-  pathName = ' http://dwheel7.pythonanywhere.com';
+  pathName = 'http://127.0.0.1:5000';
   constructor(private http: HttpClient, private ls: LoginService) { }
 
 

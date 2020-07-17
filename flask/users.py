@@ -4,8 +4,8 @@ from pymongo import MongoClient
 from flask_cors import CORS
 import urllib.parse
 
-username = urllib.parse.quote_plus('dwheel7@uab.edu')
-password = urllib.parse.quote_plus('Dvine489!')
+username = urllib.parse.quote_plus('user')
+password = urllib.parse.quote_plus('Dvine489')
 
 
 client = MongoClient('mongodb+srv://'+username+':'+password+'@cluster0.19oll.mongodb.net/<properties>?retryWrites=true&w=majority')
