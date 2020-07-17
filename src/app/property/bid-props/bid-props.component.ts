@@ -19,8 +19,8 @@ export class BidPropsComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.logger.getOwner();
-    this.property.getPropertyByOwner(this.user, '').subscribe((res) => {
-      console.log(res);
+    this.property.getPropertyByOwner(this.user).subscribe((res: any) => {
+      this.userprops = res.properties;
     });
   }
 }

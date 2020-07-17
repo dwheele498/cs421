@@ -10,6 +10,7 @@ import {
 import { PropertyModel } from '../property.model';
 import { PropertyService } from 'src/app/property.service';
 import { BindingFlags } from '@angular/compiler/src/core';
+import { LoginService } from 'src/app/login.service';
 
 @Component({
   selector: 'app-property-detail',
@@ -24,11 +25,13 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
   @Input() currentBid: number;
   bid = false;
   bidAmount: number;
+  currentUser: string
 
-  constructor(private ef: ElementRef, private ps: PropertyService) {}
+  constructor(private ef: ElementRef, private ps: PropertyService, private ls: LoginService) {}
 
   ngOnInit(): void {
     document.body.appendChild(this.ef.nativeElement);
+    this.currentUser = this.ls.getOwner();
   }
   ngOnDestroy(): void {
     document.body.removeChild(this.ef.nativeElement);
@@ -55,4 +58,8 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
       alert('Bid must be greater than starting price or current bid');
     }
   }
+
+  endBid(){
+    console.log();
+    }
 }

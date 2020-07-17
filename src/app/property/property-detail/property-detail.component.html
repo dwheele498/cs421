@@ -14,8 +14,9 @@
             </div>
         </div>
         <div class="actions actions-default">
-            <button (click)='closeDetail()' class="ui button">OK</button>
-            <button (click)='openBid()' class="ui button left-aligned">Bid</button>
+            <button (click)='closeDetail()' class="ui button secondary">OK</button>
+            <button (click)='openBid()' class="ui button left-aligned green">Bid</button>
+            <button *ngIf='owner==currentUser' class="ui button red" (click)='endBid()'>Sell</button>
         </div>
     </div>
 </div>

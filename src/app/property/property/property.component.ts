@@ -33,6 +33,7 @@ export class PropertyComponent implements OnInit {
   this.owner = this.propert.owner;
   this.currentBid = this.propert.bid;
   this.desc = this.propert.description;
+  console.log(this.propert);
   }
 
   showDetail(){

@@ -102,7 +102,7 @@ class ViewProperty(Resource):
                            )
     getparser.add_argument('name',
                            type=str,
-                           required=True,
+                           required=False,
                            help="This field cannot be left blank",
                            location='args'
                            )
@@ -112,10 +112,8 @@ class ViewProperty(Resource):
         user = ucol.find_one({'username': data['owner']})
         propids = []
         userprops = []
-        print(user['username'])
         for b in user['bids']:
             propids.append(b)
-        print(propids)
         for p in propids:
             z = col.find_one({'_id': ObjectId(p)})
             userprops.append({

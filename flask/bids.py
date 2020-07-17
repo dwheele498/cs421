@@ -53,15 +53,13 @@ class UserBids(Resource):
 
     #caught by cors for some reason, do not use
     def get(self,methods=['GET']):
-        data = UserBids.userparse.parse_args()
-        user = ucol.find_one({'username': data['username']})
+        data = request.args.get('username')
+        user = ucol.find_one({'username': data})
         propids = []
         userprops = []
-        user = ucol.find_one({'username': data['username']})
-        print(user['username'])
+        user = ucol.find_one({'username': data})
         for b in user['bids']:
             propids.append(b)
-        print(propids)
         for p in propids:
             z = col.find_one({'_id': ObjectId(p)})
             userprops.append({

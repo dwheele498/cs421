@@ -18,7 +18,8 @@ api.add_resource(ViewProperty, '/property/view')
 api.add_resource(ImageProperty,'/property/new/img')
 api.add_resource(AllProperty, '/property/all')
 api.add_resource(AddBid,'/bid/add')
-api.add_resource(UserBids,'/userbids')
+api.add_resource(UserBids,'/bids/user')
+
 
 
 if __name__ == '__main__':
