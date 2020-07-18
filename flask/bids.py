@@ -41,6 +41,7 @@ class AddBid(Resource):
         newBid = prop['bid'] + data['bid']
         col.update_one({'_id': ObjectId(data['_id'])}, {
                        '$set': {'bid': newBid}})
+        col.update_one({'_id': ObjectId(data['_id'])},{'$push':{'bidders':data['username']}})
         ucol.update({'username': data['username']}, {
                     '$addToSet': {'bids': data['_id']}})
         return {'message': 'successfully added bid'}, 200
