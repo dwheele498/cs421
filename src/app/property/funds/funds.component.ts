@@ -8,29 +8,31 @@ import { LoginService } from 'src/app/login.service';
   styleUrls: ['./funds.component.css']
 })
 export class FundsComponent implements OnInit, OnChanges {
-  money = 0;
+  newMoney: number;
+  currentMoney: number;
+  success: boolean;
 
   constructor(private fs: FundsService, private ls: LoginService) { }
 
   ngOnInit(): void {
     const user = this.ls.getOwner();
     this.fs.getFunds(user).subscribe((res: any) => {
-      this.money = res.funds;
-      console.log(this.money);
+      this.currentMoney = res.funds;
+      console.log(this.currentMoney);
     });
   }
 
   ngOnChanges(): void{
     const user = this.ls.getOwner();
     this.fs.getFunds(user).subscribe((res: any) => {
-      this.money = res.funds;
-      console.log(this.money);
+      this.currentMoney = res.funds;
+      console.log(this.currentMoney);
     });
   }
 
 
   addFunds() {
-    this.fs.addFunds(this.money, 'admin').subscribe((res) => { console.log(res); })
+    this.fs.addFunds(this.newMoney, 'admin').subscribe((res: any) => { this.success = res.result; });
   }
 
 }

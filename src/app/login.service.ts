@@ -11,7 +11,7 @@ export class LoginService {
   constructor(private http: HttpClient) {}
   owner: string;
   pathName =  'http://127.0.0.1:5000';
-  heroku = 'https://cs421-dwheeler.herokuapp.com';
+  heroku = 'https://cs421landgrab.azurewebsites.net';
 
   emitData(data) {
     this.observer.next(data);

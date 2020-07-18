@@ -55,13 +55,19 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
   }
 
   sendBid() {
-    if (this.bidAmount > this.price && this.bidAmount > this.currentBid && this.bidAmount < this.money) {
+    if (this.bidAmount > this.price && this.bidAmount > this.currentBid) {
+      if ( this.money < this.bidAmount)
+      {
+        alert('Please add more funds before trying to make this bid');
+      }
+      else{
       this.openBid();
       this.ps
         .submitBid(this.owner, this.bidAmount, this.id)
         .subscribe((res: any) => {
           console.log(res);
         });
+      }
     } else {
       alert('Bid must be greater than starting price or current bid');
     }

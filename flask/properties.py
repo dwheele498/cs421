@@ -88,7 +88,7 @@ class NewProperty(Resource):
             "name": data['name'],
             "price": data['price'],
             "owner": data['owner'],
-            "bid": 0,
+            "bid": data['price'],
             "description": data['description'],
             "imgsrc": data['imgsrc']
         }

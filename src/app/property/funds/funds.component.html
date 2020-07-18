@@ -1,2 +1,10 @@
-<input type="number" name="money" [(ngModel)]='money' id="money">
+<div class='ui gruid'>
+    <div class="ui success message" *ngIf='success'>
+        <div class="header center aligned">
+            Success
+        </div>
+        <p>Funds have been added to your account</p>
+    </div>
+<input type="number" name="money" *ngIf='!success' [(ngModel)]='newMoney' id="money" placeholder="0">
 <button class="ui button green" (click)='addFunds()'>Add Funds</button>
+</div>

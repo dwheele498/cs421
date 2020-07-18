@@ -101,7 +101,7 @@ class AddFunds(Resource):
     def post(self):
         data = AddFunds.parser.parse_args()
         col.update_one({'username':data['username']},{'$set':{'funds':data['funds']}})
-        return{'message':'funds successfully added'},200
+        return{'message':'funds successfully added','result':True},200
 
 class GetFunds(Resource):
    

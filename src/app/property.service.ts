@@ -10,7 +10,7 @@ export class PropertyService {
 
   property: {};
   pathName = 'http://127.0.0.1';
-  heroku = 'https://cs421-dwheeler.herokuapp.com';
+  heroku = 'https://cs421landgrab.azurewebsites.net';
 
   submitProperty(
     propertyName: string,
