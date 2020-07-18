@@ -6,10 +6,11 @@ import { Binary } from '@angular/compiler';
   providedIn: 'root',
 })
 export class PropertyService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   property: {};
   pathName = 'http://127.0.0.1';
+  heroku = 'https://cs421-dwheeler.herokuapp.com';
 
   submitProperty(
     propertyName: string,
@@ -18,7 +19,7 @@ export class PropertyService {
     descr: string,
     imagesrc: string
   ) {
-    return this.http.post(this.pathName + '/property/new', {
+    return this.http.post(this.heroku + '/property/new', {
       name: propertyName,
       price: startingPrice,
       owner: newOwner,
@@ -28,22 +29,22 @@ export class PropertyService {
   }
 
   submitImg(imgsrc: FormData, hheaders: HttpHeaders) {
-    return this.http.post(this.pathName + '/property/new/img', imgsrc, {
+    return this.http.post(this.heroku + '/property/new/img', imgsrc, {
       headers: hheaders,
     });
   }
 
   getPropertyByOwner(owner: string) {
-    return this.http.get(this.pathName + '/property/view?owner=' + owner);
+    return this.http.get(this.heroku + '/property/view?owner=' + owner);
   }
 
   getAllProperty() {
-    return this.http.get( this.pathName + '/property/all');
+    return this.http.get(this.heroku + '/property/all');
   }
 
   submitBid(owner: string, bidAmount: number, id: string) {
     console.log(bidAmount);
-    return this.http.post(this.pathName + '/bid/add', {
+    return this.http.post(this.heroku + '/bid/add', {
       username: owner,
       bid: bidAmount,
       _id: id,
@@ -51,16 +52,16 @@ export class PropertyService {
   }
 
   userBids(owner: string) {
-    return this.http.get('http://127.0.0.1:5000/bids/user?username=' + owner);
+    return this.http.get(this.heroku + '/bids/user?username=' + owner);
   }
 
-  sellProp(propid: string, user: string){
+  sellProp(propid: string, user: string) {
     console.log(user);
-    this.http.post('http://127.0.0.1:5000/bid/sell', {
+    this.http.post(this.heroku + '/bid/sell', {
       id: propid,
       username: user
 
-    }).subscribe((res)=>{
+    }).subscribe((res) => {
       console.log(res);
     });
   }

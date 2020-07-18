@@ -8,16 +8,17 @@ import { LoginService } from './login.service';
 export class FundsService {
 
   pathName = 'http://127.0.0.1:5000';
+  heroku = 'https://cs421-dwheeler.herokuapp.com';
   constructor(private http: HttpClient, private ls: LoginService) { }
 
 
 
   getFunds(username: string) {
-    return this.http.get(this.pathName + '/manage/checkfunds?username='+ username);
+    return this.http.get(this.heroku + '/manage/checkfunds?username=' + username);
   }
 
   addFunds(money: number, un: string) {
-    return this.http.post(this.pathName + '/manage/addfunds', {
+    return this.http.post(this.heroku + '/manage/addfunds', {
       funds: money,
       username: un
     });
