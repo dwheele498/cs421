@@ -10,7 +10,7 @@ export class PropertyService {
 
   property: {};
   pathName = 'http://127.0.0.1:5000';
-  azure = 'https://cs421landgrab.azurewebsites.net';
+  azure = 'http://cs421landgrab.azurewebsites.net';
 
   submitProperty(
     propertyName: string,
