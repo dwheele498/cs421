@@ -114,9 +114,10 @@ class ViewProperty(Resource):
     def get(self):
         data = ViewProperty.getparser.parse_args()
         user = ucol.find_one({'username': data['owner']})
+        print(user['bids'])
         propids = []
         userprops = []
-        if user['bids']:
+        if len(user['bids'])>0:
             for b in user['bids']:
                 propids.append(b)
             for p in propids:
@@ -131,8 +132,6 @@ class ViewProperty(Resource):
                         'description': z['description'],
                         'imgsrc': z['imgsrc']
                     })
-                else:
-                    return {'message':'currently no bids','properties':'no properties'},204
             return {'message': 'successfully retrieved properties', 'properties': userprops}, 200
         else:
             return {'message': 'currently no bids', 'properties' : 'no properties'}, 204

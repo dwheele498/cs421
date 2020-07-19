@@ -11,12 +11,13 @@ export class FundsComponent implements OnInit, OnChanges {
   newMoney: number;
   currentMoney: number;
   success: boolean;
+  user: string;
 
   constructor(private fs: FundsService, private ls: LoginService) { }
 
   checkMoney() {
-    const user = this.ls.getOwner();
-    this.fs.getFunds(user).subscribe((res: any) => {
+    this.user = this.ls.getOwner();
+    this.fs.getFunds(this.user).subscribe((res: any) => {
       this.currentMoney = res.funds;
       console.log(this.currentMoney);
     });
@@ -32,7 +33,7 @@ export class FundsComponent implements OnInit, OnChanges {
 
 
   addFunds() {
-    this.fs.addFunds(this.newMoney, 'admin').subscribe((res: any) => { this.success = res.result; });
+    this.fs.addFunds(this.newMoney, this.user).subscribe((res: any) => { this.success = res.result; });
     this.currentMoney = Number(this.currentMoney) + Number(this.newMoney);
   }
 }

@@ -20,7 +20,7 @@ export class PropertyService {
     descr: string,
     imagesrc: string
   ) {
-    return this.http.post(this.azure + '/property/new', {
+    return this.http.post(this.pathName + '/property/new', {
       name: propertyName,
       price: startingPrice,
       owner: newOwner,
@@ -30,22 +30,22 @@ export class PropertyService {
   }
 
   submitImg(imgsrc: FormData, hheaders: HttpHeaders) {
-    return this.http.post(this.azure + '/property/new/img', imgsrc, {
+    return this.http.post(this.pathName + '/property/new/img', imgsrc, {
       headers: hheaders,
     });
   }
 
   getPropertyByOwner(owner: string) {
-    return this.http.get(this.azure + '/property/view?owner=' + owner);
+    return this.http.get(this.pathName + '/property/view?owner=' + owner);
   }
 
   getAllProperty() {
-    return this.http.get(this.azure + '/property/all');
+    return this.http.get(this.pathName + '/property/all');
   }
 
   submitBid(owner: string, bidAmount: number, id: string) {
     console.log(bidAmount);
-    return this.http.post(this.azure + '/bid/add', {
+    return this.http.post(this.pathName + '/bid/add', {
       username: owner,
       bid: bidAmount,
       _id: id,
@@ -53,12 +53,12 @@ export class PropertyService {
   }
 
   userBids(owner: string) {
-    return this.http.get(this.azure + '/bids/user?username=' + owner);
+    return this.http.get(this.pathName + '/bids/user?username=' + owner);
   }
 
   sellProp(propid: string, user: string) {
     console.log(user);
-    this.http.post(this.azure + '/bid/sell', {
+    this.http.post(this.pathName + '/bid/sell', {
       id: propid,
       username: user
 

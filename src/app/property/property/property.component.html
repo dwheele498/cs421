@@ -1,12 +1,13 @@
-<div class="ui card">
-    <div class="image">
-      <i class="home icon"></i>
-      <img *ngIf="imgsrc!==''" src={{imgsrc}} class="item">
+<div class="ui fluid card">
+  <div class="content">
+    <div class="header">{{name}}</div>
+    <div class="ui rounded image">
+      <img *ngIf="imgsrc!==''" src={{imgsrc}} class="item" style="width: 14rem; height: 12rem;">
+    </div>
     </div>
     <div class="content">
-      <a class="header">{{name}}</a>
       <div class="description">
-        Starting Price: {{price}}
+        Current Bid: {{currentBid | currency}}
       </div>
     </div>
     <div class="extra content">

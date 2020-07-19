@@ -19,14 +19,14 @@ export class LoginService {
   }
 
   login(un: string, pw: string) {
-    return this.http.post(this.azure + '/login', {
+    return this.http.post(this.pathName + '/login', {
       username: un,
       password: pw,
     });
   }
 
   register(un: string, pw: string) {
-    return this.http.post(this.azure + '/register', {
+    return this.http.post(this.pathName + '/register', {
       username: un,
       password: pw,
     });

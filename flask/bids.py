@@ -44,6 +44,7 @@ class AddBid(Resource):
         col.update_one({'_id': ObjectId(data['_id'])},{'$push':{'bidders':data['username']}})
         ucol.update({'username': data['username']}, {
                     '$addToSet': {'bids': data['_id']}})
+        print(ucol.find_one({'username':data['username']}))
         return {'message': 'successfully added bid'}, 200
 
 
@@ -72,9 +73,9 @@ class SellProp(Resource):
             zwin = ucol.find_one({'username': data['username']})
             zwin2 = zwin['funds']
             z2 = z['funds']
-            ucol.update_one({'username': data['username']}, {'funds': z2+f})
+            ucol.update_one({'username': data['username']}, {'$set':{'funds': z2+f}})
             ucol.update_many({}, {'$pull': {'bids': data['id']}})
-            ucol.update_one({'username':winner},{'funds':zwin2-f})
+            ucol.update_one({'username':winner},{'$set':{'funds':zwin2-f}})
             return {
                 'message': 'property successfully sold'
             }

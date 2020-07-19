@@ -1,14 +1,14 @@
-<div class="ui grid">
-    <div class="six wide coulmn fluid">
-        <div class="ui vertical tabular menu">
+<div class="ui equal width grid">
+    <div class="coulmn">
+        <div class="ui fluid vertical tabular menu">
             <a class="item" [routerLinkActiveOptions]="{exact:true}" routerLink="./" routerLinkActive="active">Add New Property</a>
             <a class="item" routerLink="bids" routerLinkActive="active">View Current Bids</a>
             <a class="item" routerLink="funds" routerLinkActive="active" >Manage Funds</a>
         </div>
     </div>
-    <div class="twelve wide stretch column">
-        <div class="ui segment">
+    <div class="column">
+        
             <router-outlet></router-outlet>
-        </div>
+        
     </div>
 </div>

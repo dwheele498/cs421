@@ -16,14 +16,14 @@ export class AddPropsComponent implements OnInit {
   price: number;
   desc = '';
   imgPath = '';
-  success: boolean;
+  success: string;
   formData = new FormData();
 
   constructor(
     private login: LoginService,
     private proper: PropertyService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.owner = this.login.getOwner();
@@ -39,10 +39,12 @@ export class AddPropsComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log(res.message);
+          this.success = 'true';
+          setTimeout(() => { this.success = '' ; }, 3000);
         },
         (err: any) => {
           console.log(err);
-          this.success = false;
+          this.success = 'false';
         }
       );
   }

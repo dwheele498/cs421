@@ -15,11 +15,11 @@ export class FundsService {
 
 
   getFunds(username: string) {
-    return this.http.get(this.azure + '/manage/checkfunds?username=' + username);
+    return this.http.get(this.pathName + '/manage/checkfunds?username=' + username);
   }
 
   addFunds(money: number, un: string) {
-    return this.http.post(this.azure + '/manage/addfunds', {
+    return this.http.post(this.pathName + '/manage/addfunds', {
       funds: money,
       username: un
     });

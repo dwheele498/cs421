@@ -63,7 +63,7 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
       else{
       this.openBid();
       this.ps
-        .submitBid(this.owner, this.bidAmount, this.id)
+        .submitBid(this.currentUser, this.bidAmount, this.id)
         .subscribe((res: any) => {
           console.log(res);
         });
