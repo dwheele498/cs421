@@ -9,8 +9,8 @@ export class PropertyService {
   constructor(private http: HttpClient) { }
 
   property: {};
-  pathName = 'http://127.0.0.1';
-  heroku = 'https://cs421landgrab.azurewebsites.net';
+  pathName = 'http://127.0.0.1:5000';
+  azure = 'https://cs421landgrab.azurewebsites.net';
 
   submitProperty(
     propertyName: string,
@@ -19,7 +19,7 @@ export class PropertyService {
     descr: string,
     imagesrc: string
   ) {
-    return this.http.post(this.heroku + '/property/new', {
+    return this.http.post(this.azure + '/property/new', {
       name: propertyName,
       price: startingPrice,
       owner: newOwner,
@@ -29,22 +29,22 @@ export class PropertyService {
   }
 
   submitImg(imgsrc: FormData, hheaders: HttpHeaders) {
-    return this.http.post(this.heroku + '/property/new/img', imgsrc, {
+    return this.http.post(this.azure + '/property/new/img', imgsrc, {
       headers: hheaders,
     });
   }
 
   getPropertyByOwner(owner: string) {
-    return this.http.get(this.heroku + '/property/view?owner=' + owner);
+    return this.http.get(this.azure + '/property/view?owner=' + owner);
   }
 
   getAllProperty() {
-    return this.http.get(this.heroku + '/property/all');
+    return this.http.get(this.azure + '/property/all');
   }
 
   submitBid(owner: string, bidAmount: number, id: string) {
     console.log(bidAmount);
-    return this.http.post(this.heroku + '/bid/add', {
+    return this.http.post(this.azure + '/bid/add', {
       username: owner,
       bid: bidAmount,
       _id: id,
@@ -52,12 +52,12 @@ export class PropertyService {
   }
 
   userBids(owner: string) {
-    return this.http.get(this.heroku + '/bids/user?username=' + owner);
+    return this.http.get(this.azure + '/bids/user?username=' + owner);
   }
 
   sellProp(propid: string, user: string) {
     console.log(user);
-    this.http.post(this.heroku + '/bid/sell', {
+    this.http.post(this.azure + '/bid/sell', {
       id: propid,
       username: user
 

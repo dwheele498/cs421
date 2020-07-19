@@ -37,10 +37,10 @@ class AddBid(Resource):
 
     def post(self):
         data = AddBid.bidparse.parse_args()
-        prop = col.find_one({'_id': ObjectId(data['_id'])})
-        newBid = prop['bid'] + data['bid']
+        # prop = col.find_one({'_id': ObjectId(data['_id'])})
+        # newBid = prop['bid'] + data['bid']
         col.update_one({'_id': ObjectId(data['_id'])}, {
-                       '$set': {'bid': newBid}})
+                       '$set': {'bid': data['bid']}})
         col.update_one({'_id': ObjectId(data['_id'])},{'$push':{'bidders':data['username']}})
         ucol.update({'username': data['username']}, {
                     '$addToSet': {'bids': data['_id']}})
@@ -58,11 +58,23 @@ class SellProp(Resource):
         data = SellProp.sellparse.parse_args()
         h = col.find_one({'_id': ObjectId(data['id'])})
         f = h['bid']
-        col.delete_one({'_id': ObjectId(data['id'])})
-        z = ucol.find_one({'username': data['username']})
-        z2 = z['funds']
-        ucol.update_one({'username': data['username']}, {'funds': z2+f})
-        ucol.update_many({}, {'$pull': {'bids': data['id']}})
-        return {
-            'message': 'property successfully sold'
-        }
+        w = col.find_one({'_id': ObjectId(data['id'])},{'bidders':{'$slice':-1}})
+        winner = ucol.find_one({'username': w['bidders'][0]})
+        print(winner)
+        if winner['funds']<f:
+            while winner['funds']<f:
+                col.update_one({'_id': ObjectId(data['id'])},{'$pop':{'bidders':1}})
+                w = col.find_one({'_id': ObjectId(data['id'])},{'bidders':{'$slice':-1}})
+                winner = ucol.find_one({'username': w['bidders'][0]})
+        else:
+            col.delete_one({'_id': ObjectId(data['id'])})
+            z = ucol.find_one({'username': data['username']})
+            zwin = ucol.find_one({'username': data['username']})
+            zwin2 = zwin['funds']
+            z2 = z['funds']
+            ucol.update_one({'username': data['username']}, {'funds': z2+f})
+            ucol.update_many({}, {'$pull': {'bids': data['id']}})
+            ucol.update_one({'username':winner},{'funds':zwin2-f})
+            return {
+                'message': 'property successfully sold'
+            }

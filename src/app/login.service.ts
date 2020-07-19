@@ -11,21 +11,21 @@ export class LoginService {
   constructor(private http: HttpClient) {}
   owner: string;
   pathName =  'http://127.0.0.1:5000';
-  heroku = 'https://cs421landgrab.azurewebsites.net';
+  azure = 'https://cs421landgrab.azurewebsites.net';
 
   emitData(data) {
     this.observer.next(data);
   }
 
   login(un: string, pw: string) {
-    return this.http.post(this.heroku + '/login', {
+    return this.http.post(this.azure + '/login', {
       username: un,
       password: pw,
     });
   }
 
   register(un: string, pw: string) {
-    return this.http.post(this.heroku + '/register', {
+    return this.http.post(this.azure + '/register', {
       username: un,
       password: pw,
     });

@@ -14,7 +14,7 @@ export class FundsComponent implements OnInit, OnChanges {
 
   constructor(private fs: FundsService, private ls: LoginService) { }
 
-  ngOnInit(): void {
+  checkMoney() {
     const user = this.ls.getOwner();
     this.fs.getFunds(user).subscribe((res: any) => {
       this.currentMoney = res.funds;
@@ -22,17 +22,19 @@ export class FundsComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(): void{
-    const user = this.ls.getOwner();
-    this.fs.getFunds(user).subscribe((res: any) => {
-      this.currentMoney = res.funds;
-      console.log(this.currentMoney);
-    });
+  ngOnInit(): void {
+    this.checkMoney();
+  }
+
+  ngOnChanges(): void {
+    this.checkMoney();
   }
 
 
   addFunds() {
     this.fs.addFunds(this.newMoney, 'admin').subscribe((res: any) => { this.success = res.result; });
+    this.currentMoney = Number(this.currentMoney) + Number(this.newMoney);
   }
-
 }
+
+

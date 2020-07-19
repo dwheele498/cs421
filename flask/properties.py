@@ -170,7 +170,8 @@ class AllProperty(Resource):
                 'owner': properties['owner'],
                 'bid': properties['bid'],
                 'description': properties['description'],
-                'imgsrc': properties['imgsrc']
+                'imgsrc': properties['imgsrc'],
+                'bidders':[]
             }
             holder.append(z)
         return {'message': 'all properties attached', 'data': holder}, 200
