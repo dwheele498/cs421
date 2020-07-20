@@ -2,7 +2,7 @@
   <p>Username is already in use. Please try again.</p>
 </div>
 
-<form (ngSubmit)="register()" #registerForm="ngForm" class="ui form">
+<form (ngSubmit)="register()"  #registerForm="ngForm" class="ui form">
     <div class="field">
       <label>First Name</label>
       <input type="text" name="first-name" placeholder="First Name">
@@ -24,10 +24,17 @@
         <input required type="password" [(ngModel)]='pw' name="password" placeholder="Password">
       </div>
       <div class="field">
+        <label>Confirm Password</label>
+        <input (input)='pwcheck()' required type="password" [(ngModel)]='confpw' name="confpassword" placeholder="Confirm Password">
+      </div>
+      <div class="field">
         <label>Company Name</label>
         <input type="text" name="companyName" placeholder="Company Name">
       </div>
     <div class="field">
     </div>
-    <button (click)="register(); $event.preventDefault()"  class="ui teal button" type="submit">Submit</button>
+    <button *ngIf='!badpw' (click)="register(); $event.preventDefault()"  class="ui teal button" type="submit">Submit</button>
   </form>
+  <div *ngIf='badpw' class="ui error message">
+    <p>Passwords must match</p>
+  </div>

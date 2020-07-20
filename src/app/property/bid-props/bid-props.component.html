@@ -1,10 +1,11 @@
 <div *ngIf='!active' class="container-fluid">
     <h3 class='ui center aligned header'>No current bids</h3>
     </div>
-<ng-container *ngIf='active'>
-<div class="ui grid">
-    <div *ngFor="let p of userprops"class="five wide column" >
-        <app-property [propert]=p  ></app-property>
-    </div>
-</div>
-</ng-container>
+    <ng-container *ngIf='active'>
+        <div class="ui cards centered stackable">
+            
+            <ng-container *ngFor="let p of userprops">
+                <app-property [propert]=p  ></app-property>
+            </ng-container>
+        </div>
+        </ng-container>

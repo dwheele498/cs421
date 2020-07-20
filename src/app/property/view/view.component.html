@@ -2,12 +2,10 @@
     <h3 class='ui center aligned header'>No current properties available</h3>
     </div>
 <ng-container *ngIf='active'>
-
 <div class="ui cards centered stackable">
     
     <ng-container *ngFor="let p of proper">
         <app-property [propert]=p  ></app-property>
-        <!-- [name]="p.name" [price]="p.price" [owner]="p.owner" [currentBid]="p.currentBid" [desc]="p.description" [imgsrc]=p.imagesrc -->
     </ng-container>
 </div>
 </ng-container>
