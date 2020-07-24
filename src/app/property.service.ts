@@ -57,13 +57,14 @@ export class PropertyService {
   }
 
   sellProp(propid: string, user: string) {
-    console.log(user);
-    this.http.post(this.pathName + '/bid/sell', {
+    return this.http.post(this.pathName + '/bid/sell', {
       id: propid,
       username: user
 
-    }).subscribe((res) => {
-      console.log(res);
     });
+  }
+
+  getMyProps(owner: string) {
+    return this.http.get(this.pathName + '/manage/myproperties?username=' + owner);
   }
 }

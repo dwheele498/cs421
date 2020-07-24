@@ -10,37 +10,41 @@ import { PropertyService } from 'src/app/property.service';
 })
 export class PropertyComponent implements OnInit {
 
- @Input() propert: any;
- name: string;
- price: number;
- owner: string;
- imgsrc: string;
- currentBid: number;
- desc: string;
- showDet = false;
- newBid = 0;
- id: string;
+  @Input() propert: any;
+  name: string;
+  price: number;
+  owner: string;
+  imgsrc: string;
+  currentBid: number;
+  desc: string;
+  showDet = false;
+  newBid = 0;
+  id: string;
 
   constructor(private proper: PropertyService) {
   }
 
   ngOnInit(): void {
 
-  this.id = this.propert.id;
-  this.name = this.propert.name;
-  this.imgsrc = this.propert.imgsrc;
-  this.price = this.propert.price;
-  this.owner = this.propert.owner;
-  this.currentBid = this.propert.bid;
-  this.desc = this.propert.description;
-  console.log(this.propert);
+    this.id = this.propert.id;
+    this.name = this.propert.name;
+    if (this.propert.imgsrc === '') {
+      this.imgsrc = 'assets/images.png';
+    }
+    else { this.imgsrc = this.propert.imgsrc; }
+
+    this.price = this.propert.price;
+    this.owner = this.propert.owner;
+    this.currentBid = this.propert.bid;
+    this.desc = this.propert.description;
+    console.log(this.propert);
   }
 
-  showDetail(){
+  showDetail() {
     this.showDet = !this.showDet;
   }
 
-  setBid(bid: number){
+  setBid(bid: number) {
     this.newBid = bid;
   }
 

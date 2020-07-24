@@ -10,7 +10,7 @@ import { PropertyService } from 'src/app/property.service';
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.css'],
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent implements OnInit, OnChanges {
   proper: [];
   active: boolean;
 
@@ -25,6 +25,18 @@ export class ViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.propt.getAllProperty().subscribe((resp: any) => {
+      this.proper = resp.data;
+      if (this.proper.length > 0){
+        this.active = true;
+      }
+      else {
+        this.active = false;
+      }
+    });
+  }
+
+  ngOnChanges(): void{
     this.propt.getAllProperty().subscribe((resp: any) => {
       this.proper = resp.data;
       if (this.proper.length > 0){

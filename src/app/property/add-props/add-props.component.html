@@ -1,7 +1,7 @@
-<div *ngIf='success=="false"' class="ui error message">
+<div  *ngIf='success=="false"' class="ui error message">
   <p>Property failed to upload please try again</p>
 </div>
-<div *ngIf='success=="true"' class="ui success message">
+<div  *ngIf='success=="true"' class="ui success message">
   <p>Property successfully uploaded</p>
 </div>
 <form #propertyForm (submit)='propertyForm.reset()' class="ui form">

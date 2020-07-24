@@ -44,8 +44,7 @@ class AddBid(Resource):
         col.update_one({'_id': ObjectId(data['_id'])},{'$push':{'bidders':data['username']}})
         ucol.update({'username': data['username']}, {
                     '$addToSet': {'bids': data['_id']}})
-        print(ucol.find_one({'username':data['username']}))
-        return {'message': 'successfully added bid'}, 200
+        return {'status': 'Successfully added bid'}
 
 
 class SellProp(Resource):
@@ -57,25 +56,25 @@ class SellProp(Resource):
 
     def post(self):
         data = SellProp.sellparse.parse_args()
-        h = col.find_one({'_id': ObjectId(data['id'])})
-        f = h['bid']
+        propSold = col.find_one({'_id': ObjectId(data['id'])})
+        propSoldAmount = propSold['bid']
         w = col.find_one({'_id': ObjectId(data['id'])},{'bidders':{'$slice':-1}})
         winner = ucol.find_one({'username': w['bidders'][0]})
-        print(winner)
-        if winner['funds']<f:
-            while winner['funds']<f:
-                col.update_one({'_id': ObjectId(data['id'])},{'$pop':{'bidders':1}})
-                w = col.find_one({'_id': ObjectId(data['id'])},{'bidders':{'$slice':-1}})
-                winner = ucol.find_one({'username': w['bidders'][0]})
+        print('Winner is ' + winner['username'])
+        if winner['funds']<propSoldAmount:
+            col.update_one({'_id': ObjectId(data['id'])},{'$set':{'bidders':'[]'}})
+            col.update_one({'_id': ObjectId(data['id'])},{'$set':{'bid':propSold['price']}})
+            return{'status':'Unable to sell property. Bids have been reset to default','sale':False}
         else:
-            col.delete_one({'_id': ObjectId(data['id'])})
-            z = ucol.find_one({'username': data['username']})
-            zwin = ucol.find_one({'username': data['username']})
-            zwin2 = zwin['funds']
-            z2 = z['funds']
-            ucol.update_one({'username': data['username']}, {'$set':{'funds': z2+f}})
+            owner = ucol.find_one({'username': data['username']})
+            ownerFunds = owner['funds']
+            ucol.update_one({'username': data['username']}, {'$set':{'funds': ownerFunds+propSoldAmount}})
             ucol.update_many({}, {'$pull': {'bids': data['id']}})
-            ucol.update_one({'username':winner},{'$set':{'funds':zwin2-f}})
+            ucol.update_one({'username':winner['username']},{'$set':{'funds':winner['funds']-propSoldAmount}})
+            winUpdate = ucol.find_one({'username':winner['username']})
+            print(winUpdate['username'] + ':' + str(winUpdate['funds']))
+            col.delete_one({'_id': ObjectId(data['id'])})
             return {
-                'message': 'property successfully sold'
+                'status': 'Property successfully sold',
+                'sale':True
             }

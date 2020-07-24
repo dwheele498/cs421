@@ -1,22 +1,45 @@
-<div (click)='closeDetail()' class="ui dimmer visible active">
-    <div (click)="$event.stopPropagation()" class="ui modal visible active">
-        <i (click)='closeDetail()' class="close icon"></i>
-        <div class="header">
-            <ng-content select="[detailTitle]"></ng-content>
-        </div>
-        <div class="content">
-            <ng-content></ng-content>
-            <div class="field">
-            <div class="footer" *ngIf='bid'>
-                <input #bidIn [(ngModel)]='bidAmount' class="ui input focus" type="text" placeholder="Enter Bid Here">
-                <button class="ui button submit" (click)='sendBid();bidIn.value("")'>Submit</button>
-            </div>
-            </div>
-        </div>
-        <div class="actions actions-default">
-            <button (click)='closeDetail()' class="ui button secondary">OK</button>
-            <button (click)='openBid()' class="ui button left-aligned green">Bid</button>
-            <button *ngIf='owner==currentUser' class="ui button red" (click)='endBid()'>Sell</button>
-        </div>
+<div (click)="closeDetail()" class="ui dimmer visible active">
+  <div (click)="$event.stopPropagation()" class="ui modal visible active">
+    <i (click)="closeDetail()" class="close icon"></i>
+    <div class="header">
+      <ng-content select="[detailTitle]"></ng-content>
     </div>
+    <div class="content">
+        <div class="ui success message" *ngIf="propSell === 'yes'">
+            <div class="header">Success</div>
+            <p>{{ propStatus }}</p>
+          </div>
+      <ng-content></ng-content>
+      <div class="field">
+        <div class="footer" *ngIf="bid">
+          <input
+            #bidIn
+            [(ngModel)]="bidAmount"
+            class="ui input focus"
+            type="text"
+            placeholder="Enter Bid Here"
+          />
+          <button class="ui button submit" (click)="sendBid(); bidIn.value=''">
+            Submit
+          </button>
+          <div class="ui negative message" *ngIf="propSell === 'no'">
+            {{ propStatus }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actions actions-default">
+      <button (click)="closeDetail()" class="ui button secondary">OK</button>
+      <button (click)="openBid()" class="ui button left-aligned green">
+        Bid
+      </button>
+      <button
+        *ngIf="owner == currentUser"
+        class="ui button red"
+        (click)="endBid()"
+      >
+        Sell
+      </button>
+    </div>
+  </div>
 </div>

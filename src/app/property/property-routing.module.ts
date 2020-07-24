@@ -5,6 +5,7 @@ import { ManageComponent } from './manage/manage.component';
 import {AddPropsComponent} from './add-props/add-props.component';
 import { BidPropsComponent } from './bid-props/bid-props.component';
 import { FundsComponent } from './funds/funds.component';
+import { MyPropertiesComponent } from './my-properties/my-properties.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
         children: [
             {path: '', component: AddPropsComponent},
             {path: 'bids', component: BidPropsComponent},
-            {path: 'funds', component: FundsComponent}
+            {path: 'funds', component: FundsComponent},
+            {path: 'myprops', component: MyPropertiesComponent}
         ]
     },
 ];

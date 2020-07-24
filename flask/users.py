@@ -110,4 +110,5 @@ class GetFunds(Resource):
    def get(self):
     data = request.args.get('username')
     z = col.find_one({'username':data})
+    print(z)
     return {'funds':z['funds']},200

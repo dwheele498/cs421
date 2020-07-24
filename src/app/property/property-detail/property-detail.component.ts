@@ -27,6 +27,9 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
   bidAmount: number;
   currentUser: string;
   money: number;
+  propSell: string;
+  propStatus: string;
+
 
   constructor(
     private ef: ElementRef,
@@ -56,25 +59,53 @@ export class PropertyDetailComponent implements OnInit, OnDestroy {
 
   sendBid() {
     if (this.bidAmount > this.price && this.bidAmount > this.currentBid) {
-      if ( this.money < this.bidAmount)
-      {
-        alert('Please add more funds before trying to make this bid');
+      if (this.money < this.bidAmount) {
+        this.propStatus = 'Please add more funds before trying to make this bid';
+        this.propSell = 'no';
+        setTimeout(() => {
+          this.propSell = '';
+        }, 5000);
       }
-      else{
-      this.openBid();
-      this.ps
-        .submitBid(this.currentUser, this.bidAmount, this.id)
-        .subscribe((res: any) => {
-          console.log(res);
-        });
+      else {
+        this.openBid();
+        this.ps
+          .submitBid(this.currentUser, this.bidAmount, this.id)
+          .subscribe((res: any) => {
+          });
+        this.propStatus = 'Bid successfully added';
+        this.propSell = 'yes';
+        setTimeout(() => {
+          this.propSell = '';
+          this.closeDetail();
+        }, 5000);
       }
     } else {
-      alert('Bid must be greater than starting price or current bid');
+      this.propStatus = 'Bid must be greater than starting price or current bid';
+      this.propSell = 'no';
+      setTimeout(() => {
+        this.propSell = '';
+      }, 5000);
     }
   }
 
   endBid() {
-    this.ps.sellProp(this.id, this.currentUser);
-    this.closeDetail();
+    this.ps.sellProp(this.id, this.currentUser).subscribe((res: any) => {
+      if (res.sale) {
+        this.propStatus = res.status;
+        this.propSell = 'yes';
+        setTimeout(() => {
+          this.propSell = '';
+          this.closeDetail();
+        }, 5000);
+      }
+      else {
+        this.propStatus = res.status;
+        this.propSell = 'no';
+        setTimeout(() => {
+          this.propSell = '';
+        });
+      }
+    });
+
   }
 }

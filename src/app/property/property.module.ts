@@ -9,6 +9,7 @@ import { AddPropsComponent } from './add-props/add-props.component';
 import { BidPropsComponent } from './bid-props/bid-props.component';
 import { FormsModule } from '@angular/forms';
 import { FundsComponent } from './funds/funds.component';
+import { MyPropertiesComponent } from './my-properties/my-properties.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FundsComponent } from './funds/funds.component';
     AddPropsComponent,
     BidPropsComponent,
     FundsComponent,
+    MyPropertiesComponent,
   ],
   imports: [CommonModule, PropertyRoutingModule, FormsModule],
 })

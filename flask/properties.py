@@ -114,7 +114,6 @@ class ViewProperty(Resource):
     def get(self):
         data = ViewProperty.getparser.parse_args()
         user = ucol.find_one({'username': data['owner']})
-        print(user['bids'])
         propids = []
         userprops = []
         if len(user['bids'])>0:
@@ -174,6 +173,29 @@ class AllProperty(Resource):
             }
             holder.append(z)
         return {'message': 'all properties attached', 'data': holder}, 200
+
+class MyProperty(Resource):
+
+    def get(self):
+        username = request.args.get('username')
+        mine = col.find({'owner':username})
+        props = []
+        
+        if mine.count()>0:
+            for m in mine:
+                print(m)
+                holder = {
+                        'id': str(m['_id']),
+                        'name': m['name'],
+                        'price': m['price'],
+                        'owner': m['owner'],
+                        'bid': m['bid'],
+                        'description': m['description'],
+                        'imgsrc': m['imgsrc'],
+                }
+                props.append(holder)
+        return {'data':props},200
+
 
 
 # class AddBid(Resource):

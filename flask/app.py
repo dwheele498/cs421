@@ -3,7 +3,7 @@ from flask_restful import Api, reqparse
 from users import UserLogin, UserRegister, AddFunds, GetFunds
 from bids import AddBid, SellProp
 from flask_cors import CORS, logging
-from properties import NewProperty, ViewProperty, ImageProperty, AllProperty
+from properties import NewProperty, ViewProperty, ImageProperty, AllProperty, MyProperty
 
 app = Flask(__name__)
 app.secret_key = 'secretkey'
@@ -22,6 +22,7 @@ api.add_resource(SellProp, '/bid/sell')
 api.add_resource(AddBid,'/bid/add')
 api.add_resource(AddFunds,'/manage/addfunds')
 api.add_resource(GetFunds,'/manage/checkfunds')
+api.add_resource(MyProperty, '/manage/myproperties')
 
 
 
